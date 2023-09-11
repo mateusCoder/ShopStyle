@@ -1,19 +1,22 @@
 package com.mcm.mscustomer.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum Sex {
-    FEMININO ("Feminino"),
-    MASCULINO ("Masculino");
+    FEMININO("Feminino"),
+    MASCULINO("Masculino");
 
-    private final String values;
+    private final String value;
 
-    Sex(String values){
-        this.values = values;
+    Sex(String value){
+        this.value = value;
     }
 
-    public static String getSex(String value){
+    @JsonCreator
+    public static Sex fromValue(String value){
         for (Sex sex : Sex.values()){
-            if (sex.values.equals(value)){
-                return value;
+            if (sex.value.equalsIgnoreCase(value)){
+                return sex;
             }
         }
         return null;

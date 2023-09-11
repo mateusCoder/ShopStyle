@@ -1,5 +1,7 @@
 package com.mcm.mscustomer.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum State {
     ACRE("Acre"),
     ALAGOAS("Alagoas"),
@@ -29,16 +31,17 @@ public enum State {
     SERGIPE("Sergipe"),
     TOCANTINS("Tocantins");
 
-    private String value;
+    private final String value;
 
     State(String value){
         this.value = value;
     }
 
-    public String getState(String value){
+    @JsonCreator
+    public static State getState(String value){
         for (State state : State.values()){
-            if (state.values().equals(value)){
-                return value;
+            if (state.value.equalsIgnoreCase(value)){
+                return state;
             }
         }
         return null;

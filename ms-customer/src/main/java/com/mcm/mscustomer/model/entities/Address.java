@@ -1,10 +1,7 @@
 package com.mcm.mscustomer.model.entities;
 
 import com.mcm.mscustomer.model.enums.State;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -19,6 +16,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(value = EnumType.STRING)
     private State state;
 
     private String city;

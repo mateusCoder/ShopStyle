@@ -26,6 +26,7 @@ public class Customer {
 
     private String lastName;
 
+    @Enumerated(value = EnumType.STRING)
     private Sex sex;
 
     private String cpf;
@@ -37,7 +38,7 @@ public class Customer {
 
     private String password;
 
-    private boolean active;
+    private boolean active = true;
 
     private static final int ID_LENGTH = 10;
     private static final String CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyz";
