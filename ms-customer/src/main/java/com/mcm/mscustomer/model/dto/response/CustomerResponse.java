@@ -28,8 +28,6 @@ public class CustomerResponse {
 
     private String email;
 
-    private String password;
-
     private boolean active;
 
 }

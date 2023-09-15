@@ -46,7 +46,4 @@ public class CustomerRequest {
     @NotEmpty
     private String password;
 
-    @NotNull
-    private boolean active;
-
 }
