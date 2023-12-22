@@ -1,11 +1,14 @@
 package com.mcm.mscustomer.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mcm.mscustomer.model.enums.Sex;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Entity
@@ -14,6 +17,7 @@ import java.util.Random;
 @Getter
 @Setter
 @Builder
+@EqualsAndHashCode(exclude = "addresses")
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "UniqueCPFAndEmail",
         columnNames = { "cpf", "email" }) })
@@ -40,6 +44,10 @@ public class Customer {
 
     private boolean active = true;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Address> addresses = new ArrayList<>();
+
     private static final int ID_LENGTH = 10;
     private static final String CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyz";
 
@@ -54,6 +62,10 @@ public class Customer {
             id.append(randomChar);
         }
         this.id = id.toString();
+    }
+
+    public void setAddress(Address address){
+        addresses.add(address);
     }
 
 }

@@ -1,18 +1,16 @@
-package com.mcm.mscustomer.model.dto.response;
+package com.mcm.mscustomer.model.dto.request;
 
 import com.mcm.mscustomer.model.enums.State;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class AddressResponse {
-
-    private Long id;
+public class AddressRequestUpdate {
 
     private State state;
 
@@ -27,7 +25,5 @@ public class AddressResponse {
     private String cep;
 
     private String complement;
-
-    private String customerId;
 
 }

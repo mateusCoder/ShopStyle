@@ -1,5 +1,6 @@
 package com.mcm.mscustomer.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mcm.mscustomer.model.enums.State;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@EqualsAndHashCode(exclude = "customer")
 public class Address {
 
     @Id
@@ -32,5 +34,10 @@ public class Address {
     private String complement;
 
     private String customerId;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_pk")
+    @JsonBackReference
+    private Customer customer;
 
 }
