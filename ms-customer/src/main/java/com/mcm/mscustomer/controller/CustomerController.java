@@ -45,17 +45,20 @@ public class CustomerController {
 
     @PostMapping("/addresses")
     public  ResponseEntity<AddressResponse> createAddress(@Valid @RequestBody AddressRequest addressRequest){
+        LOGGER.info("[(POST) - createAddress | Body: {}]", addressRequest);
         return ResponseEntity.created(addressService.createAddress(addressRequest)).build();
     }
 
     @PutMapping("/addresses/{id}")
     public ResponseEntity<AddressResponse> updateAddress(@PathVariable Long id,
                                                          @Valid @RequestBody AddressRequestUpdate addressRequest){
+        LOGGER.info("[(PUT) - updateAddress | ID: {} | Body: {}]", id, addressRequest);
         return ResponseEntity.ok(addressService.updateAddress(id, addressRequest));
     }
 
     @DeleteMapping("/addresses/{id}")
     public ResponseEntity<?> deleteAddress(@PathVariable Long id){
+        LOGGER.info("[(DELETE) - deleteAddress | ID: {}]", id);
         addressService.deleteAddress(id);
         return ResponseEntity.ok().build();
     }
