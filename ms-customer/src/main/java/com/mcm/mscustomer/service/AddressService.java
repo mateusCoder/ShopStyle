@@ -8,7 +8,7 @@ import java.net.URI;
 
 public interface AddressService {
 
-    URI createAddress(AddressRequest addressRequest);
+    URI createAddressAndAssociateWithCustomer(AddressRequest addressRequest);
 
     AddressResponse updateAddress(Long id, AddressRequestUpdate addressRequest);
 

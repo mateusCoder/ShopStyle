@@ -3,8 +3,6 @@ package com.mcm.mscustomer.model.dto.response;
 import com.mcm.mscustomer.model.enums.State;
 import lombok.*;
 
-import java.util.UUID;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

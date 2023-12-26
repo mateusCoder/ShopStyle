@@ -16,3 +16,7 @@ spring.jpa:
   hibernate:
     ddl-auto: create-drop
   show-sql: true
+
+  logging:
+    level:
+      org.springframework.web: DEBUG

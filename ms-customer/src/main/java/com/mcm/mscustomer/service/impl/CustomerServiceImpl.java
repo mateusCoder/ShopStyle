@@ -5,6 +5,7 @@ import com.mcm.mscustomer.model.dto.response.CustomerResponse;
 import com.mcm.mscustomer.model.entities.Customer;
 import com.mcm.mscustomer.repository.CustomerRepository;
 import com.mcm.mscustomer.service.CustomerService;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponse updateCustomer(String id, CustomerRequest customerRequest) {
-        var customer = customerRepository.findById(id).orElseThrow(RuntimeException::new);
+        var customer = customerRepository.findById(id).orElseThrow(NotFoundException::new);
         customer = mapper.map(customerRequest, Customer.class);
         customer.setId(id);
         customerRepository.save(customer);
@@ -44,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponse findById(String id) {
-        var customer = customerRepository.findById(id).orElseThrow(RuntimeException::new);
+        var customer = customerRepository.findById(id).orElseThrow(NotFoundException::new);
         LOGGER.info("[findById - CUSTOMER FOUD | ID:{} | Object:{}]", customer.getId(), customer);
         return mapper.map(customer, CustomerResponse.class);
     }

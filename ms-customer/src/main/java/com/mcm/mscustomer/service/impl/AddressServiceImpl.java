@@ -8,6 +8,7 @@ import com.mcm.mscustomer.model.entities.Customer;
 import com.mcm.mscustomer.repository.AddressRepository;
 import com.mcm.mscustomer.repository.CustomerRepository;
 import com.mcm.mscustomer.service.AddressService;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -26,35 +27,32 @@ public class AddressServiceImpl implements AddressService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public URI createAddress(AddressRequest addressRequest) {
+    public URI createAddressAndAssociateWithCustomer(AddressRequest addressRequest) {
         Address address = mapper.map(addressRequest, Address.class);
+        Customer customer = customerRepository.findById(addressRequest.getCustomerId()).orElseThrow(NotFoundException::new);
         addressRepository.save(address);
-        Customer customer = customerRepository.findById(addressRequest.getCustomerId()).orElseThrow();
         customer.setAddress(address);
         address.setCustomer(customer);
         addressRepository.save(address);
-
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(address.getId()).toUri();
     }
 
     @Override
     public AddressResponse updateAddress(Long id, AddressRequestUpdate addressRequest) {
-        Address existingAddress = validateAddress(id);
-
+        Address existingAddress = getAndValidateAddressById(id);
         Address updatedAddress = mapper.map(addressRequest, Address.class);
         updatedAddress.setId(id);
         updatedAddress.setCustomerId(existingAddress.getCustomerId());
-
         return mapper.map(addressRepository.save(updatedAddress), AddressResponse.class);
     }
 
     @Override
     public void deleteAddress(Long id) {
-        validateAddress(id);
+        getAndValidateAddressById(id);
         addressRepository.deleteById(id);
     }
 
-    private Address validateAddress(Long id){
-        return addressRepository.findById(id).orElseThrow();
+    private Address getAndValidateAddressById(Long id){
+        return addressRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 }

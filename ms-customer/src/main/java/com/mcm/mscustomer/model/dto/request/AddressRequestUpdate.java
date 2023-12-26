@@ -1,8 +1,6 @@
 package com.mcm.mscustomer.model.dto.request;
 
 import com.mcm.mscustomer.model.enums.State;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @AllArgsConstructor

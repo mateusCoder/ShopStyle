@@ -25,7 +25,7 @@ public class CustomerController {
     private static final Logger LOGGER = LogManager.getLogger(CustomerController.class);
 
     @PostMapping("/customers")
-    public ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CustomerRequest customerRequest){
+    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody @Valid CustomerRequest customerRequest){
         LOGGER.info("[(POST) - createCustomer | Body: {}]", customerRequest);
         return ResponseEntity.created(customerService.createCustomer(customerRequest)).build();
     }
@@ -44,9 +44,9 @@ public class CustomerController {
     }
 
     @PostMapping("/addresses")
-    public  ResponseEntity<AddressResponse> createAddress(@Valid @RequestBody AddressRequest addressRequest){
+    public  ResponseEntity<AddressResponse> createAddress(@RequestBody @Valid AddressRequest addressRequest){
         LOGGER.info("[(POST) - createAddress | Body: {}]", addressRequest);
-        return ResponseEntity.created(addressService.createAddress(addressRequest)).build();
+        return ResponseEntity.created(addressService.createAddressAndAssociateWithCustomer(addressRequest)).build();
     }
 
     @PutMapping("/addresses/{id}")
