@@ -1,0 +1,5 @@
+sonar:
+  projectKey: ShopStyle_MsCustomer
+  projectName: ShopStyle_MsCustomer
+  host:
+    url: http://localhost:9000/
