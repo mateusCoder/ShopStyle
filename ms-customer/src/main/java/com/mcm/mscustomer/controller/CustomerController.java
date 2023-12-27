@@ -57,7 +57,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/addresses/{id}")
-    public ResponseEntity<?> deleteAddress(@PathVariable Long id){
+    public ResponseEntity<Void> deleteAddress(@PathVariable Long id){
         LOGGER.info("[(DELETE) - deleteAddress | ID: {}]", id);
         addressService.deleteAddress(id);
         return ResponseEntity.ok().build();

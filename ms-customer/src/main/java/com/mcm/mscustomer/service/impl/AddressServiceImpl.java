@@ -28,7 +28,7 @@ public class AddressServiceImpl implements AddressService {
 
     private final CustomerRepository customerRepository;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(AddressServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddressServiceImpl.class);
 
     @Override
     public URI createAddressAndAssociateWithCustomer(AddressRequest addressRequest) {

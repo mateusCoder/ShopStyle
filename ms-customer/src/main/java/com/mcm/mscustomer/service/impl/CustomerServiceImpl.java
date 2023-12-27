@@ -37,8 +37,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponse updateCustomer(String id, CustomerRequest customerRequest) {
         LOGGER.info("[Start update Customer | Body={}, Customer_Id={}]", customerRequest, id);
-        var customer = customerRepository.findById(id).orElseThrow(NotFoundException::new);
-        customer = mapper.map(customerRequest, Customer.class);
+        getAndValidateCustomerById(id);
+        var customer = mapper.map(customerRequest, Customer.class);
         customer.setId(id);
         customerRepository.save(customer);
         LOGGER.info("[updateCustomer - CUSTOMER UPDATED IN DATABASE ID:{} | Object:{}]", customer.getId(), customer);
@@ -48,8 +48,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponse findById(String id) {
         LOGGER.info("[Start find Customer by id | Customer_Id={}]", id);
-        var customer = customerRepository.findById(id).orElseThrow(NotFoundException::new);
+        var customer = getAndValidateCustomerById(id);
         LOGGER.info("[findById - CUSTOMER FOUND | ID:{} | Object:{}]", customer.getId(), customer);
         return mapper.map(customer, CustomerResponse.class);
+    }
+
+    private Customer getAndValidateCustomerById(String id){
+        return customerRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 }

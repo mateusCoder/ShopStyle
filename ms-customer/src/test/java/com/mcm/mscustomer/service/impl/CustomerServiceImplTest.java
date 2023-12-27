@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.net.URI;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -53,7 +53,7 @@ class CustomerServiceImplTest {
 
     @Test
     void updateCustomer_WhenSendValidIdAndCustomerRequest_ExpectedSuccess() {
-        when(customerRepository.findById(eq(ID))).thenReturn(Optional.of(CustomerScenarioFactory.getCustomer()));
+        when(customerRepository.findById(anyString())).thenReturn(Optional.of(CustomerScenarioFactory.getCustomer()));
         when(customerRepository.save(any(Customer.class))).thenReturn(CustomerScenarioFactory.getCustomer());
 
         var response = customerService.updateCustomer(ID, CustomerScenarioFactory.getCustomerRequest());
@@ -64,7 +64,7 @@ class CustomerServiceImplTest {
 
     @Test
     void findById_WhenSendValidId_ExpectedSuccess() {
-        when(customerRepository.findById(eq(ID))).thenReturn(Optional.ofNullable(CustomerScenarioFactory.getCustomer()));
+        when(customerRepository.findById(anyString())).thenReturn(Optional.ofNullable(CustomerScenarioFactory.getCustomer()));
 
         var response = customerService.findById(ID);
 
