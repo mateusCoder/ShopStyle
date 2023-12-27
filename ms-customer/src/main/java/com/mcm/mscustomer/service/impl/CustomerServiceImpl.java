@@ -27,6 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public URI createCustomer(CustomerRequest customerRequest) {
+        LOGGER.info("[Start create Customer | Body={}]", customerRequest);
         Customer customer = mapper.map(customerRequest, Customer.class);
         customerRepository.save(customer);
         LOGGER.info("[createCustomer - CUSTOMER SAVED IN DATABASE | ID:{} | Object:{}]", customer.getId(), customer);
@@ -35,6 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponse updateCustomer(String id, CustomerRequest customerRequest) {
+        LOGGER.info("[Start update Customer | Body={}, Customer_Id={}]", customerRequest, id);
         var customer = customerRepository.findById(id).orElseThrow(NotFoundException::new);
         customer = mapper.map(customerRequest, Customer.class);
         customer.setId(id);
@@ -45,8 +47,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponse findById(String id) {
+        LOGGER.info("[Start find Customer by id | Customer_Id={}]", id);
         var customer = customerRepository.findById(id).orElseThrow(NotFoundException::new);
-        LOGGER.info("[findById - CUSTOMER FOUD | ID:{} | Object:{}]", customer.getId(), customer);
+        LOGGER.info("[findById - CUSTOMER FOUND | ID:{} | Object:{}]", customer.getId(), customer);
         return mapper.map(customer, CustomerResponse.class);
     }
 }

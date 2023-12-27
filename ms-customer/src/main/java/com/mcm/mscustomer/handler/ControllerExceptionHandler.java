@@ -30,24 +30,28 @@ public class ControllerExceptionHandler {
     @ExceptionHandler({BadRequestException.class})
     public ResponseEntity<Object> handleBadRequestException(Exception e, WebRequest request){
         Map<String, String> errors = createResponse("INVALID_ARGUMENT",BAD_REQUEST_MESSAGE);
+        LOGGER.error(e.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public ResponseEntity<Object> methodArgumentNotValidException(Exception e, WebRequest request){
         Map<String, String> errors = createResponse("INVALID_ARGUMENT",BAD_REQUEST_MESSAGE);
+        LOGGER.error(e.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({PSQLException.class})
     public ResponseEntity<Object> PSQLException(Exception e, WebRequest request){
         Map<String, String> errors = createResponse("INVALID_ARGUMENT", PSQL_MESSAGE);
+        LOGGER.error(e.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ForbiddenException.class})
     public ResponseEntity<Object> handleForbiddenException(Exception e, WebRequest request){
         Map<String, String> errors = createResponse("PERMISSION_DENIED", FORBIDDEN_MESSAGE);
+        LOGGER.error(e.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.FORBIDDEN);
     }
 
@@ -61,18 +65,21 @@ public class ControllerExceptionHandler {
     @ExceptionHandler({NotAuthorizedException.class})
     public ResponseEntity<Object> handleNotAuthorizedException(Exception e, WebRequest request){
         Map<String, String> errors = createResponse("NOT_AUTHORIZED", NOT_AUTHORIZED_MESSAGE);
+        LOGGER.error(e.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({InternalServerErrorException.class})
     public ResponseEntity<Object> handleInternalServerErrorException(Exception e, WebRequest request){
         Map<String, String> errors = createResponse("INTERNAL", INTERNAL_SERVER_MESSAGE);
+        LOGGER.error(e.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({SocketTimeoutException.class})
     public ResponseEntity<Object> handleSocketTimeoutException(Exception e, WebRequest request){
         Map<String, String> errors = createResponse("TIMEOUT", SOCKET_TIMEOUT_MESSAGE);
+        LOGGER.error(e.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.GATEWAY_TIMEOUT);
     }
 

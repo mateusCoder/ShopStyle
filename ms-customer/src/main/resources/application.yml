@@ -12,6 +12,12 @@ spring:
     password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
+logging:
+  level:
+    root: INFO
+  pattern:
+    console: "%clr(%-5level) %d{yyyy-MM-dd HH:mm:ss}: %msg%n"
+
 spring.jpa:
   hibernate:
     ddl-auto: create-drop
