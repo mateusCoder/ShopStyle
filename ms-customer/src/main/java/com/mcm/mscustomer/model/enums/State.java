@@ -2,6 +2,8 @@ package com.mcm.mscustomer.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import java.text.Normalizer;
+
 public enum State {
     ACRE("Acre"),
     ALAGOAS("Alagoas"),
@@ -40,10 +42,15 @@ public enum State {
     @JsonCreator
     public static State getState(String value){
         for (State state : State.values()){
-            if (state.value.equalsIgnoreCase(value)){
+            if (removeDiacriticalMarks(state.value).equalsIgnoreCase(value)){
                 return state;
             }
         }
         return null;
+    }
+
+    private static String removeDiacriticalMarks(String str) {
+        return Normalizer.normalize(str, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 }

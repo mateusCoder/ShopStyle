@@ -1,9 +1,11 @@
 package com.mcm.mscustomer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mcm.mscustomer.factory.AddressScenarioFactory;
 import com.mcm.mscustomer.factory.CustomerScenarioFactory;
 import com.mcm.mscustomer.model.dto.response.CustomerResponse;
 import com.mcm.mscustomer.model.entities.Customer;
+import com.mcm.mscustomer.repository.AddressRepository;
 import com.mcm.mscustomer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
@@ -26,6 +28,8 @@ class CustomerControllerTest {
     private final MockMvc mockMvc;
 
     private final CustomerRepository customerRepository;
+
+    private final AddressRepository addressRepository;
 
     private final ObjectMapper objectMapper;
 
@@ -65,5 +69,40 @@ class CustomerControllerTest {
 
         String responseBody = result.getResponse().getContentAsString();
         CustomerResponse returnedCustomer = objectMapper.readValue(responseBody, CustomerResponse.class);
+    }
+
+    @Test
+    void createAddress_WhenSendValidAddressRequest_ExpectedSuccess() throws Exception {
+        Customer customer = customerRepository.save(CustomerScenarioFactory.getFourthCustomer());
+        var request = AddressScenarioFactory.getAddressRequest();
+        request.setCustomerId(customer.getId());
+        String addressRequest = objectMapper.writeValueAsString(request);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/addresses")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(addressRequest))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    void updateAddress_WhenSendValidAddressRequestUpdate_ExpectedSuccess() throws Exception {
+        var address = addressRepository.save(AddressScenarioFactory.getAddress());
+        String addressRequest = objectMapper.writeValueAsString(AddressScenarioFactory.getAddressRequestUpdate());
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/addresses/{id}",address.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(addressRequest))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    void deleteAddress_WhenSendValidId_ExpectedSuccess() throws Exception {
+        var address = addressRepository.save(AddressScenarioFactory.getAddress());
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete("/addresses/{id}", address.getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
     }
 }

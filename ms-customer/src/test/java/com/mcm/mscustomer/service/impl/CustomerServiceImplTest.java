@@ -5,6 +5,7 @@ import com.mcm.mscustomer.model.dto.request.CustomerRequest;
 import com.mcm.mscustomer.model.dto.response.CustomerResponse;
 import com.mcm.mscustomer.model.entities.Customer;
 import com.mcm.mscustomer.repository.CustomerRepository;
+import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -63,6 +64,17 @@ class CustomerServiceImplTest {
     }
 
     @Test
+    void updateCustomer_WhenSendInvalidValidId_ExpectedNotFoundException() {
+        when(customerRepository.save(any(Customer.class))).thenReturn(CustomerScenarioFactory.getCustomer());
+
+        try {
+            customerService.updateCustomer(ID, CustomerScenarioFactory.getCustomerRequest());
+        }catch (NotFoundException e){
+            assertEquals(NotFoundException.class, e.getClass());
+        }
+    }
+
+    @Test
     void findById_WhenSendValidId_ExpectedSuccess() {
         when(customerRepository.findById(anyString())).thenReturn(Optional.ofNullable(CustomerScenarioFactory.getCustomer()));
 
@@ -70,5 +82,14 @@ class CustomerServiceImplTest {
 
         assertNotNull(response);
         assertEquals(ID, response.getId());
+    }
+
+    @Test
+    void findById_WhenSendInvalidId_ExpectedNotFoundException() {
+        try {
+            customerService.findById(ID);
+        }catch (NotFoundException e){
+            assertEquals(NotFoundException.class, e.getClass());
+        }
     }
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @RequiredArgsConstructor
 public class CustomerScenarioFactory {
@@ -35,6 +36,7 @@ public class CustomerScenarioFactory {
                 .email(EMAIL)
                 .password(PASSWORD)
                 .active(ACTIVE)
+                .addresses(new ArrayList<>())
                 .build();
     }
 
@@ -49,6 +51,13 @@ public class CustomerScenarioFactory {
         Customer customer = getCustomer();
         customer.setEmail("macardo@email.com");
         customer.setCpf("180.894.990-07");
+        return customer;
+    }
+
+    public static Customer getFourthCustomer(){
+        Customer customer = getCustomer();
+        customer.setEmail("m@email.com");
+        customer.setCpf("037.763.080-28");
         return customer;
     }
 

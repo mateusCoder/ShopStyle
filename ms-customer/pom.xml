@@ -20,6 +20,8 @@
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.java.binaries>${project.build.directory}/classes</sonar.java.binaries>
+		<sonar.junit.reportPaths>${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
 		<sonar.language>java</sonar.language>
 	</properties>
 	<dependencies>
@@ -100,6 +102,15 @@
 				<version>3.10.0.2594</version>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.11</version>
@@ -126,10 +137,10 @@
 							<excludes>
 								<exclude>**/config/**</exclude>
 								<exclude>**/model/**</exclude>
-								<exclude>**/MsCustomerApplication.java/**</exclude>
+								<exclude>**/MsCustomerApplication.java</exclude>
 								<exclude>**/handler/**</exclude>
 								<exclude>**/test/**</exclude>
-								<exclude>**/pom.xml/**</exclude>
+								<exclude>**/pom.xml</exclude>
 							</excludes>
 							<rules>
 								<rule>
