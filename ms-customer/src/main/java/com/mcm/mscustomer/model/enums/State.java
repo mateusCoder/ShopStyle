@@ -42,15 +42,10 @@ public enum State {
     @JsonCreator
     public static State getState(String value){
         for (State state : State.values()){
-            if (removeDiacriticalMarks(state.value).equalsIgnoreCase(value)){
+            if (state.value.equalsIgnoreCase(value)){
                 return state;
             }
         }
         return null;
-    }
-
-    private static String removeDiacriticalMarks(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD)
-                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 }
