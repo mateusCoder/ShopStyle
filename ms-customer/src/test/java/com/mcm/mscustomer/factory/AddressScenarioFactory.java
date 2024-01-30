@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 public class AddressScenarioFactory {
 
     private static final Long ID = 1L;
-    private static final State STATE = State.CEARA;
+    private static final State STATE = State.ALAGOAS;
     private static final String CITY = "Fortaleza";
     private static final String DISTRICT = "Conjunto Ceará";
     private static final String STREET = "Rua 202B";
